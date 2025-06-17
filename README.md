@@ -1,46 +1,43 @@
 # poisson-disc-sampler
 
-Tool to generate equally-separated positions inside an area using Poisson disc sampling methodology.
-
-## Overview
-
-`poisson-disc-sampler` generates a number of randomly picked points inside a given area with a maximum achievable distance from each others and the area borders using Poisson disc sampling.
-
-Tool is written in **C++**.
+A C++ tool to generate equally-separated positions inside a user-defined area using Poisson disc sampling.
 
 ## Features
+- Reads an input CSV file defining the area.
+- Generates random points with a minimum distance between them and from borders.
+- Plots the generated points using CImg and X11.
 
-- Reads given input CSV file defining the area inside which points are generated.
-- Plots the generated points.
+## Requirements
+- C++ compiler (C++11 or newer)
+- CMake
+- [CImg](https://cimg.eu/) (included)
+- X11 development package (`libx11-dev`)
 
-## Prerequisities
+## Build
+```bash
+sudo apt-get install libx11-dev
+cd poisson-disc-sampler
+mkdir build && cd build
+cmake ..
+make
+```
 
-`poisson-disc-sampler` requires the X11 development package
+## Usage
+```bash
+./bin/poisson-disc-sampler <area.csv> <num_positions> <max_attempts>
+```
+- `<area.csv>`: CSV file with area definition (see below)
+- `<num_positions>`: Number of points to generate
+- `<max_attempts>`: Max attempts per point before rejection
 
-On Debian/Ubuntu:
-   ```bash
-   sudo apt-get install libx11-dev
-   ```
+Example:
+```bash
+./bin/poisson-disc-sampler ../input/area.csv 300 500
+```
 
-## Installation
+## Input File Format
+CSV with lines: `x,y,flag`  
+`flag=1` means inside area, `flag=0` means outside.
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/tnihtila/poisson-disc-sampler.git
-   ```
-
-2. Build
-   ```bash
-   cd poisson-disc-sampler
-   mkdir build
-   cd build
-   cmake ..
-   make
-   ```
-
-3. Test with the example input file and parameters
-   ```bash
-   # 300 positions with max 500 attempts per generated point
-   ./bin/poisson-disc-sampler ../input/area.csv 300 500
-   ```
+## License
+See `CImg.h` for CImg license. Project code is MIT licensed unless otherwise stated.
